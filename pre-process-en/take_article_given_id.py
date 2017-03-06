@@ -9,6 +9,8 @@ import re
 # directory of en-wiki file
 en_wiki_directory = '/Users/macbook/Documents/Data_Skripsi/Wikipedia English/enwiki-20170220-pages-articles-multistream.xml'
 # directory folder of output folder will be
+en_ids_directory = '/Users/macbook/Documents/Data_Skripsi/Wikipedia/wikiBilingual/titles_id/en_ids'
+
 output_folder = 'output-en/'
 
 def is_beginning_of_page(line):
@@ -49,20 +51,36 @@ class Page:
 		out.close()
 
 
+f_ids = open(en_ids_directory, 'r')
+ids = []
+
+for line in f_ids:
+	line = line.strip()
+	doc_id = int(line)
+	ids.append(doc_id)
+
+f_ids.close()
+
+
 f = open(en_wiki_directory,'r')
 
 in_page = False
 page = None
 in_text = False
 is_first_id = True
+index = 0
+skip = True
 
 for line in f:
 	line = line.strip()
 	if is_beginning_of_page(line):
 		in_page = True
 	elif is_end_of_page(line):
-		#print page.id, page.title
-		page.print_to_file()
+		if ids[index] < page.page_id:
+			index += 1
+		if page.page_id == ids[index]:
+			page.print_to_file()
+			index += 1
 		in_page = False
 		page = None
 		is_first_id = True
