@@ -69,7 +69,6 @@ page = None
 in_text = False
 is_first_id = True
 index = 0
-skip = True
 
 for line in f:
 	line = line.strip()
