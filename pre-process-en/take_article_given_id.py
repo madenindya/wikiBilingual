@@ -7,9 +7,9 @@
 import re
 
 # directory of en-wiki file
-en_wiki_directory = '/Users/macbook/Documents/Data_Skripsi/Wikipedia English/enwiki-20170220-pages-articles-multistream.xml'
+en_wiki_directory = 'enwiki-20170220-pages-articles-multistream.xml'
 # directory folder of output folder will be
-en_ids_directory = '/Users/macbook/Documents/Data_Skripsi/Wikipedia/wikiBilingual/titles_id/en_ids'
+en_ids_directory = 'en_ids.txt'
 
 output_folder = 'output-en/'
 
@@ -34,6 +34,8 @@ def get_content_from_text_tag(tag_type, line):
 		m = re.search('^<text xml:space="preserve">(.*)$', line)
 	else:
 		m = re.search('(.*)</text>$', line)
+	if m == None:
+		return ''
 	return m.group(1)
 
 class Page:
@@ -75,9 +77,13 @@ for line in f:
 	if is_beginning_of_page(line):
 		in_page = True
 	elif is_end_of_page(line):
+		if index == len(ids):
+			print "Done"
+			exit()
 		if ids[index] < page.page_id:
 			index += 1
 		if page.page_id == ids[index]:
+			print "Document id:", page.page_id
 			page.print_to_file()
 			index += 1
 		in_page = False
