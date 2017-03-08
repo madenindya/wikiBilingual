@@ -6,8 +6,8 @@
 
 import re
 
-# directory of en-wiki file
-en_wiki_directory = 'enwiki-20170220-pages-articles-multistream.xml'
+# directory of cleaned file
+clean_directory = 'directory/'
 # directory folder of output folder will be
 en_ids_directory = 'en_ids.txt'
 
@@ -61,25 +61,34 @@ for line in f_ids:
 
 f_ids.close()
 
-
-f = open(en_wiki_directory,'r')
-
-page = None
-
-for line in f:
-	line = line.strip()
-	if "<doc id=" in line and "title=" in line:
-		(doc_id, title) = get_id_title_from_line(line)
-		page = Page(doc_id, title, '')
-	else:
-		if "</doc>" in line:
-			# print the page
-			page.print_to_file
-			print "Completed file :", page.title,"with id", page.page_id
-			page = None
-		else:
-			page.content = page.content + '\n' + line
+## reading section from cleaned directory
+arr_of_folder = []
 
 
+for folder in arr_of_folder:
+	length = 100
+	if folder == #SOME LAST FOLDER:
+		length = #SOME INT VALUE OF LAST FILE IN THE LAST FOLDER 
+	for i in range(length):
+		index = i
 
-f.close()
+		if i < 10:
+			index = '0' + str(index)
+		f = open(clean_directory + folder + '/wiki_' + index ,'r')
+
+		page = None
+
+		for line in f:
+			line = line.strip()
+			if "<doc id=" in line and "title=" in line:
+				(doc_id, title) = get_id_title_from_line(line)
+				page = Page(doc_id, title, '')
+			else:
+				if "</doc>" in line:
+					# print the page
+					page.print_to_file
+					print "Completed file :", page.title,"with id", page.page_id
+					page = None
+				else:
+					page.content = page.content + '\n' + line
+		f.close()
