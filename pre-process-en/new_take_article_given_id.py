@@ -64,6 +64,7 @@ f_ids.close()
 ## reading section from cleaned directory
 arr_of_folder = []
 
+ids_index = 0
 
 for folder in arr_of_folder:
 	length = 100
@@ -82,13 +83,24 @@ for folder in arr_of_folder:
 			line = line.strip()
 			if "<doc id=" in line and "title=" in line:
 				(doc_id, title) = get_id_title_from_line(line)
-				page = Page(doc_id, title, '')
-			else:
-				if "</doc>" in line:
-					# print the page
-					page.print_to_file
-					print "Completed file :", page.title,"with id", page.page_id
-					page = None
+				while(ids[ids_index] < int(doc_id)):
+					ids_index += 1
+				if int(ids[ids_index]) == int(doc_id):
+					ids_index += 1
+					page = Page(int(doc_id), title, '')
 				else:
-					page.content = page.content + '\n' + line
+					page = None
+			else:
+				if page not None:
+					if "</doc>" in line:
+						# print the page
+						page.print_to_file
+						print "Completed file :", page.title,"with id", page.page_id
+						page = None
+						if len(ids) == ids_index:
+							print "Done"
+							f.close()
+							exit()
+					else:	
+						page.content = page.content + '\n' + line
 		f.close()
