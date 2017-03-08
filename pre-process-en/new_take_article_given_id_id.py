@@ -1,4 +1,4 @@
-# get the list of id from links-id-en-pages (id of english wikipedia page)
+# get the list of id from links-id-id-pages (id of english wikipedia page)
 
 # output supposed to be files which contains only article within the id (smaller version of the original en-wiki)
 
@@ -7,11 +7,11 @@
 import re
 
 # directory of cleaned file
-clean_directory = 'directory/'
+clean_directory = 'output-clean-id/'
 # directory folder of output folder will be
-en_ids_directory = 'en_ids.txt'
+id_ids_directory = 'id_ids.txt'
 
-output_folder = 'output-en/'
+output_folder = 'output-id/'
 
 def is_beginning_of_page(line):
 	return line == '<page>'
@@ -51,7 +51,7 @@ class Page:
 		out.close()
 
 
-f_ids = open(en_ids_directory, 'r')
+f_ids = open(id_ids_directory, 'r')
 ids = []
 
 for line in f_ids:
@@ -62,14 +62,14 @@ for line in f_ids:
 f_ids.close()
 
 ## reading section from cleaned directory
-arr_of_folder = []
+arr_of_folder = ['AA','AB','AC','AD','AE']
 
 ids_index = 0
 
 for folder in arr_of_folder:
 	length = 100
-	if folder == #SOME LAST FOLDER:
-		length = #SOME INT VALUE OF LAST FILE IN THE LAST FOLDER 
+	if folder == 'AE'
+		length = 18
 	for i in range(length):
 		index = i
 
